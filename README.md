@@ -1,3 +1,5 @@
+Baptiste Houques - ESGI Mastère 2
+
 # projetClarify
 
 Ce projet est un système de réseau social très simple intégrant une IA d'image via API.
