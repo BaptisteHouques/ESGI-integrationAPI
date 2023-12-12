@@ -1,0 +1,14 @@
+{
+  "users": [
+    { "username": "a", "password": "00" },
+    { "username": "b", "password": "00" }
+  ],
+  "posts": [
+    {
+      "userId": "Bertrand",
+      "text": "Voici un post.",
+      "image": "https://usualcom.net/wp-content/uploads/2017/09/12364849-Planet-Earth-and-human-eye-Stock-Photo.jpg",
+      "tags": ["eyes", "tag2"]
+    }
+  ]
+}
