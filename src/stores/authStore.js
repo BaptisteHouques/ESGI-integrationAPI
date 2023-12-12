@@ -33,6 +33,10 @@ export const useAuthStore = defineStore({
       router.push('/sign_in').catch(err => {
         console.log(err)
       })
+    },
+
+    functionBlackList() {
+      this.user.tagBlackList
     }
   }
 });

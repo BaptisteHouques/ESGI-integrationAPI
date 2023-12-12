@@ -10,6 +10,7 @@ const auth = useAuthStore()
     <div v-show="auth.user" class="wrapper">
       <nav class="main-nav">
         <RouterLink class="nav-link" to="/">Home</RouterLink>
+        <RouterLink class="nav-link" to="/blackList">BlackList</RouterLink>
         <button class="sign-out-btn" @click="useAuthStore().logout()">Sign Out</button>
       </nav>
     </div>

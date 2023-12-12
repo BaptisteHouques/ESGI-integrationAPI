@@ -1,13 +1,24 @@
 <script setup>
 import {usePostStore} from "@/stores/postStore";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import CreatePost from "@/components/CreatePost.vue";
+import {useAuthStore} from "@/stores/authStore";
 
+const auth = useAuthStore()
 const postStore = usePostStore();
 const showCreatePost = ref(false)
 
 onMounted(async () => {
     await postStore.loadPosts();
+});
+
+// Propriété calculée pour filtrer les posts
+const filteredPosts = computed(() => {
+    const blackListedTags = auth.user.tagBlackList || [];
+    return postStore.posts.filter(post => {
+        // Vérifie si le post contient des tags blacklistés
+        return !post.tags.some(tag => blackListedTags.includes(tag));
+    });
 });
 
 </script>
@@ -19,7 +30,7 @@ onMounted(async () => {
         <CreatePost v-if="showCreatePost" @onClose="showCreatePost = false" />
 
         <section class="post-list">
-            <article class="post-item" v-for="post in usePostStore().posts" :key="post.username">
+            <article class="post-item" v-for="post in filteredPosts" :key="post.username">
                 <div class="user-id">{{ post.username }}</div>
                 <p class="post-text">{{ post.text }}</p>
                 <div class="image-container">

@@ -1,7 +1,19 @@
 {
   "users": [
-    { "username": "a", "password": "00" },
-    { "username": "b", "password": "00" }
+    {
+      "username": "a",
+      "password": "00",
+      "tagBlackList": [
+        "spiders"
+      ]
+    },
+    {
+      "username": "b",
+      "password": "00",
+      "tagBlackList": [
+        "flowers"
+      ]
+    }
   ],
   "posts": [
     {

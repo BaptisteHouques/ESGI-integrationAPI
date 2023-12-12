@@ -1,10 +1,10 @@
 <template>
     <div class="signin-container">
-        <div class="signin-form">
+        <form class="signin-form">
             <input class="input-field" v-model="username" placeholder="Username" />
             <input class="input-field" v-model="password" type="password" placeholder="Password" />
-            <button class="signin-btn" @click="handleSignIn">Sign In</button>
-        </div>
+            <button class="signin-btn" type="submit" @click="handleSignIn">Sign In</button>
+        </form>
     </div>
 </template>
 

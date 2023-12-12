@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SignInVue from "@/views/SignInVue.vue";
 import {useAuthStore} from "@/stores/authStore";
+import BlackListView from "@/views/BlackListView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,11 @@ const router = createRouter({
       name: 'signIn',
       component: SignInVue
     },
+    {
+      path: '/blacklist',
+      name: 'blacklist',
+      component: BlackListView
+    }
   ],
 })
 
