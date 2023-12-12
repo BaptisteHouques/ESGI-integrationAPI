@@ -1,6 +1,10 @@
 # projetClarify
 
-This template should help get you started developing with Vue 3 in Vite.
+Ce projet est un système de réseau social très simple.
+- On peut se connecter avec : username: a, mdp: 00.  
+- Connecté, on peut voir une liste des posts des utilisateurs de l'application.  
+- On peut poster un post avec une image et, à l'aide de l'API de Clarifai, récupérer 3 suggestions de tag à appliquer au post.  
+- Chaque image poster a aussi une balise alt et title, contenant une description faite via les tags récupérés, pour les personnes malvoyantes.
 
 ## Recommended IDE Setup
 

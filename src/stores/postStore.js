@@ -18,11 +18,12 @@ export const usePostStore = defineStore({
             }
         },
 
-        async createPost(userId, text, imageUrl, tags) {
+        async createPost(userId, text, imageUrl, imageAlt, tags) {
             const newPost = {
                 userId,
                 text,
                 imageUrl,
+                imageAlt,
                 tags
             };
 
@@ -67,9 +68,7 @@ export const usePostStore = defineStore({
                 .then(response => response.json())
                 .then(result => {
                     // Traitement du résultat pour extraire les tags
-                    const concepts = result.outputs[0].data.concepts;
-                    const tags = concepts.slice(0, 3).map(concept => concept.name); // Prendre les 3 premiers mots-clés
-                    return tags;
+                    return result.outputs[0].data.concepts;
                 })
                 .catch(error => {
                     console.error('Error fetching tags:', error);

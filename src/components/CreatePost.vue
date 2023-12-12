@@ -32,6 +32,7 @@ const emits = defineEmits(['onClose'])
 const waiting = ref(false);
 const text = ref('');
 const imageUrl = ref('');
+const imageAlt = ref('');
 const suggestedTags = ref([]);
 const selectedTags = ref('');
 const showTags = ref(false);
@@ -39,7 +40,10 @@ const showTags = ref(false);
 const fetchTags = async () => {
     waiting.value = true
     usePostStore().getTagsFromImage(imageUrl.value).then((response) => {
-        suggestedTags.value = response;
+        suggestedTags.value = response.slice(0, 3).map(concept => concept.name);
+        // Préparation de la phrase avec les 5 premiers tags
+        const firstFiveTags = response.slice(0, 5).map(concept => concept.name);
+        imageAlt.value = "The image contains: " + firstFiveTags.join(', ');
         showTags.value = true;
         waiting.value = false
     });
@@ -56,7 +60,7 @@ const addTag = (tag) => {
 
 const submitPost = () => {
     const postStore = usePostStore();
-    postStore.createPost(useAuthStore().user.username, text.value, imageUrl.value, selectedTags.value.split(',').map(tag => tag.trim()));
+    postStore.createPost(useAuthStore().user.username, text.value, imageUrl.value, imageAlt.value, selectedTags.value.split(',').map(tag => tag.trim()));
     imageUrl.value = '';
     suggestedTags.value = [];
     selectedTags.value = '';

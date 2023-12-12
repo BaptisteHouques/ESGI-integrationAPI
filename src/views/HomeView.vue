@@ -19,12 +19,16 @@ onMounted(async () => {
         <CreatePost v-if="showCreatePost" @onClose="showCreatePost = false" />
 
         <section class="post-list">
-            <article class="post-item" v-for="post in usePostStore().posts" :key="post.userId">
-                <div class="user-id">{{ post.userId }}</div>
+            <article class="post-item" v-for="post in usePostStore().posts" :key="post.username">
+                <div class="user-id">{{ post.username }}</div>
                 <p class="post-text">{{ post.text }}</p>
-                <img :src="post.imageUrl" alt="Post Image" class="post-image">
+                <div class="image-container">
+                    <img :src="post.imageUrl" :alt="post.imageAlt" :title="post.imageAlt" class="post-image">
+                </div>
                 <div class="post-tags">
-                    Tags: <span v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
+                    Tags:
+                    <span v-if="post.tags[0] !== ''" v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
+                    <span v-else>Aucuns</span>
                 </div>
             </article>
         </section>
@@ -33,7 +37,7 @@ onMounted(async () => {
 
 <style scoped>
 .home-container {
-    max-width: 800px;
+    max-width: 500px;
     margin: auto;
     padding: 20px;
 }
@@ -70,11 +74,18 @@ onMounted(async () => {
     color: #555;
 }
 
-.post-image {
-    width: 100%;
-    height: auto;
+.image-container {
     margin-top: 10px;
-    border-radius: 10px;
+    text-align: center;
+}
+
+.post-image {
+    max-width: 100%; /* Assure que l'image ne dépasse pas la largeur de son conteneur */
+    max-height: 300px; /* Définit la hauteur maximale de l'image */
+    height: auto; /* Garde le ratio de l'image */
+    object-fit: cover; /* S'assure que l'image couvre la zone définie tout en gardant son ratio */
+    margin-bottom: 10px;
+    border-radius: 8px; /* Optionnel: pour arrondir les coins de l'image */
 }
 
 .post-tags {
