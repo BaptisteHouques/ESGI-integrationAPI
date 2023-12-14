@@ -10,7 +10,8 @@ Ce projet est un système de réseau social très simple intégrant des IA vie A
 - Système de blacklist pour les posts.
 
 ## TP2 - Input de texte
-- Système de traduction de post avec l'IA de ChatGPT (GPT-3_5-turbo)
+- Système de traduction de post avec l'IA de ChatGPT (GPT-3_5-turbo).
+- Création de post : système de correction du texte entré avec l'IA de ChatGPT (GPT-3_5-turbo).
 
 ## Configuration
 - Changer le PAT dans le .env par le votre.
