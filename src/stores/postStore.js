@@ -19,10 +19,11 @@ export const usePostStore = defineStore({
             }
         },
 
-        async createPost(text, imageUrl, imageAlt, tags) {
+        async createPost(username, text, imageUrl, imageAlt, tags) {
             let id = uuidv4()
             const newPost = {
                 id,
+                username,
                 text,
                 imageUrl,
                 imageAlt,
@@ -35,7 +36,7 @@ export const usePostStore = defineStore({
         // Dans votre store Pinia ou un composable
 
         async getTagsFromImage (imageUrl) {
-            const PAT = '4011bb96e60a4871bfb3ef53834e66df';
+            const PAT = import.meta.env.VITE_PAT;
             const USER_ID = 'clarifai';
             const APP_ID = 'main';
             const MODEL_ID = 'general-image-recognition';

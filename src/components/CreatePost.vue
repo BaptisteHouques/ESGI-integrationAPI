@@ -1,10 +1,11 @@
 <template>
     <div class="create-post-container">
         <input class="input-field" type="text" v-model="text" placeholder="Enter text">
-        <input class="input-field" type="text" v-model="imageUrl" placeholder="Enter image URL">
+        <input class="input-field" type="url" v-model="imageUrl" @blur="validateUrl" placeholder="Enter image URL">
+        <div class="error-message" v-if="imageUrlError">{{ imageUrlError }}</div>
         <button class="btn-action" @click="fetchTags">Get Tags</button>
 
-        <div v-if="waiting" class="loading">Waiting ...</div>
+        <div v-if="waiting" class="loading">Waiting...</div>
 
         <div v-if="suggestedTags.length" class="tags-container">
             <p>Suggested Tags:</p>
@@ -26,6 +27,7 @@
 import { ref } from 'vue';
 import { usePostStore } from '@/stores/postStore';
 import {useAuthStore} from "@/stores/authStore";
+import {toastHandler} from "@/helper/toastHandler";
 
 const emits = defineEmits(['onClose'])
 
@@ -36,6 +38,7 @@ const imageAlt = ref('');
 const suggestedTags = ref([]);
 const selectedTags = ref('');
 const showTags = ref(false);
+const imageUrlError = ref('');
 
 const fetchTags = async () => {
     waiting.value = true
@@ -60,7 +63,15 @@ const addTag = (tag) => {
 
 const submitPost = () => {
     const postStore = usePostStore();
-    postStore.createPost(useAuthStore().user.username, text.value, imageUrl.value, imageAlt.value, selectedTags.value.split(',').map(tag => tag.trim()));
+    let tagsPosted
+    if (selectedTags.value) {
+        tagsPosted = selectedTags.value.split(',').map(tag => tag.trim())
+    }
+    else {
+        tagsPosted = []
+    }
+    postStore.createPost(useAuthStore().user.username, text.value, imageUrl.value, imageAlt.value, tagsPosted);
+    toastHandler('success', "Post créé!")
     imageUrl.value = '';
     suggestedTags.value = [];
     selectedTags.value = '';
@@ -71,6 +82,16 @@ const submitPost = () => {
 function close() {
     emits('onClose')
 }
+
+const validateUrl = () => {
+    // Version simplifiée de l'expression régulière pour valider les URLs
+    const pattern = /^(https?:\/\/)?[\w-]+(\.[\w-]+)+[/#?]?.*$/;
+    if (!pattern.test(imageUrl.value)) {
+        imageUrlError.value = 'Invalid URL. Please enter a valid URL.';
+    } else {
+        imageUrlError.value = '';
+    }
+};
 </script>
 
 <style scoped>

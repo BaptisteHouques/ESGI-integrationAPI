@@ -42,8 +42,8 @@ function translate(postId, text) {
 
 <template>
     <main class="home-container">
-        <h1>Liste des posts</h1>
-        <button class="btn-toggle-create" @click="showCreatePost = !showCreatePost">Créer un post</button>
+        <h1>List of Posts</h1>
+        <button class="btn-toggle-create" @click="showCreatePost = !showCreatePost">Create Post</button>
         <CreatePost v-if="showCreatePost" @onClose="showCreatePost = false" />
 
         <section class="post-list">
@@ -62,7 +62,7 @@ function translate(postId, text) {
                 <div class="post-tags">
                     Tags:
                     <span v-if="post.tags[0] !== ''" v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
-                    <span v-else>Aucuns</span>
+                    <span v-else>None</span>
                 </div>
             </article>
         </section>

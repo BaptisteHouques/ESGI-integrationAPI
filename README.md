@@ -1,5 +1,4 @@
 Baptiste Houques - ESGI Mastère 2
-
 # projetClarify
 
 Ce projet est un système de réseau social très simple intégrant des IA vie API.
@@ -13,13 +12,12 @@ Ce projet est un système de réseau social très simple intégrant des IA vie A
 ## TP2 - Input de texte
 - Système de traduction de post avec l'IA de ChatGPT (GPT-3_5-turbo)
 
+## Configuration
+- Changer le PAT dans le .env par le votre.
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
