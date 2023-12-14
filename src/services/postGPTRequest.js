@@ -1,13 +1,11 @@
 import {toastHandler} from "@/helper/toastHandler";
 
-export function translateText (text) {
+export function postGPTRequest (text) {
     const PAT = import.meta.env.VITE_PAT;
     const USER_ID = 'openai';
     const APP_ID = 'chat-completion';
     const MODEL_ID = 'GPT-3_5-turbo';
     const MODEL_VERSION_ID = '4471f26b3da942dab367fe85bc0f7d21';
-
-    const language = localStorage.getItem('selectedLanguage')
 
     const raw = JSON.stringify({
         "user_app_id": {
@@ -18,7 +16,7 @@ export function translateText (text) {
             {
                 "data": {
                     "text": {
-                        "raw": "Translate the following into " + language + ", return only the translation: " + text
+                        "raw": text
                     }
                 }
             }
