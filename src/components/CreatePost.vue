@@ -3,7 +3,7 @@
         <input class="input-field" type="text" v-model="text" placeholder="Enter text">
         <input class="input-field" type="url" v-model="imageUrl" @blur="validateUrl" placeholder="Enter image URL">
         <div class="error-message" v-if="imageUrlError">{{ imageUrlError }}</div>
-        <button class="btn-action" @click="fetchTags">Get Tags</button>
+        <button v-show="imageUrl" class="btn-action" @click="fetchTags" :disabled="!!imageUrlError">Get Tags</button>
 
         <div v-if="waiting" class="loading">Waiting...</div>
 
@@ -18,8 +18,10 @@
             <p>Selected Tags:</p>
             <input class="input-field" type="text" v-model="selectedTags" placeholder="Enter tags (separated by commas)">
         </div>
-
-        <button class="btn-action" @click="submitPost">Submit Post</button>
+        <div class="submit-container">
+            {{imageUrlError}}
+            <button class="btn-action" @click="submitPost" :disabled="!!imageUrlError">Submit Post</button>
+        </div>
     </div>
 </template>
 
@@ -118,6 +120,11 @@ const validateUrl = () => {
     cursor: pointer;
 }
 
+.btn-action:disabled {
+    cursor: not-allowed;
+    background-color: #a9a9a9;
+}
+
 .loading {
     color: #000;
     margin-bottom: 10px;
@@ -125,5 +132,10 @@ const validateUrl = () => {
 
 .tags-container, .selected-tags {
     margin-bottom: 20px;
+}
+
+.submit-container {
+    margin-top: 10px;
+    text-align: center;
 }
 </style>
