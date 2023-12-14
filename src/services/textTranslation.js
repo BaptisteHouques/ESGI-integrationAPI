@@ -1,3 +1,5 @@
+import {toastHandler} from "@/helper/toastHandler";
+
 export function translateText (text) {
     const PAT = import.meta.env.VITE_PAT;
     const USER_ID = 'openai';
@@ -35,9 +37,15 @@ export function translateText (text) {
     return fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result)
-            // Traitement du résultat pour extraire les tags
-            return result.outputs[0].data.text.raw;
+            if (result.status.description !== 'Ok') {
+                console.log(result)
+                toastHandler('error', result.status.description)
+            }
+            else {
+                console.log(result)
+                // Traitement du résultat pour extraire les tags
+                return result.outputs[0].data.text.raw;
+            }
         })
         .catch(error => {
             console.log('error', error)
