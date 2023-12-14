@@ -1,5 +1,6 @@
 import axios from "axios";
 import {defineStore} from "pinia";
+import { v4 as uuidv4 } from "uuid";
 
 export const usePostStore = defineStore({
     id: 'post',
@@ -18,9 +19,10 @@ export const usePostStore = defineStore({
             }
         },
 
-        async createPost(userId, text, imageUrl, imageAlt, tags) {
+        async createPost(text, imageUrl, imageAlt, tags) {
+            let id = uuidv4()
             const newPost = {
-                userId,
+                id,
                 text,
                 imageUrl,
                 imageAlt,

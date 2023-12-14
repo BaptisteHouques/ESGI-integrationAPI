@@ -3,6 +3,7 @@ import {usePostStore} from "@/stores/postStore";
 import {computed, onMounted, ref} from "vue";
 import CreatePost from "@/components/CreatePost.vue";
 import {useAuthStore} from "@/stores/authStore";
+import {translateText} from "@/services/textTranslation";
 
 const auth = useAuthStore()
 const postStore = usePostStore();
@@ -21,6 +22,22 @@ const filteredPosts = computed(() => {
     });
 });
 
+function translate(postId, text) {
+    // Trouver le post et mettre loadingTranslation à true
+    const post = postStore.posts.find(p => p.id === postId);
+    if (post) {
+        post.loadingTranslation = true;
+    }
+
+    translateText(text).then((translatedText) => {
+        if (post) {
+            // Ajouter la propriété translatedText et mettre loadingTranslation à false
+            post.translatedText = translatedText;
+            post.loadingTranslation = false;
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -33,6 +50,12 @@ const filteredPosts = computed(() => {
             <article class="post-item" v-for="post in filteredPosts" :key="post.username">
                 <div class="user-id">{{ post.username }}</div>
                 <p class="post-text">{{ post.text }}</p>
+                <p v-if="post.translatedText" class="post-text translated-text">{{ post.translatedText }}</p>
+                <p v-show="!post.translatedText" class="clickable" @click="translate(post.id, post.text)">
+                    <strong>Translate</strong>
+                    <span v-if="post.loadingTranslation" class="loading-indicator"></span>
+                </p>
+                <p v-show="post.translatedText" class="clickable" @click="post.translatedText = null"><strong>Hide translation</strong></p>
                 <div class="image-container">
                     <img :src="post.imageUrl" :alt="post.imageAlt" :title="post.imageAlt" class="post-image">
                 </div>
@@ -85,6 +108,10 @@ const filteredPosts = computed(() => {
     color: #555;
 }
 
+.translated-text {
+    border-top: solid 1px;
+}
+
 .image-container {
     margin-top: 10px;
     text-align: center;
@@ -113,4 +140,31 @@ const filteredPosts = computed(() => {
     border-radius: 5px;
     font-size: 14px;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+strong {
+    font-weight: 600;
+    font-style: italic;
+    color: #317234;
+}
+
+.loading-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #333;
+    border-radius: 50%;
+    margin-left: 5px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 </style>

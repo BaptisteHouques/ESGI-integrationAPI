@@ -17,6 +17,7 @@
   ],
   "posts": [
     {
+      "id": "40c856b1-5f36-44af-bc7b-67cd03d5ade7",
       "username": "Bertrand",
       "text": "Voici un post.",
       "imageUrl": "https://usualcom.net/wp-content/uploads/2017/09/12364849-Planet-Earth-and-human-eye-Stock-Photo.jpg",
@@ -24,6 +25,7 @@
       "imageAlt": "The image contains: eyes, beautiful"
     },
     {
+      "id": "aa14c770-0df5-4300-882e-a829c3094981",
       "username": "Bertrand",
       "text": "Regardez ce magnifique lion!",
       "imageUrl": "https://static.euronews.com/articles/235526/1440x810_235526.jpg",
