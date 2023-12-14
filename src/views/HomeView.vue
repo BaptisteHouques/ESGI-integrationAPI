@@ -3,10 +3,11 @@ import {usePostStore} from "@/stores/postStore";
 import {computed, onMounted, ref} from "vue";
 import CreatePost from "@/components/CreatePost.vue";
 import {useAuthStore} from "@/stores/authStore";
-import {translateText} from "@/services/textTranslation";
+import {postGPTRequest} from "@/services/postGPTRequest";
 
 const auth = useAuthStore()
 const postStore = usePostStore();
+const language = localStorage.getItem('selectedLanguage')
 const showCreatePost = ref(false)
 
 onMounted(async () => {
@@ -29,7 +30,7 @@ function translate(postId, text) {
         post.loadingTranslation = true;
     }
 
-    translateText(text).then((translatedText) => {
+    postGPTRequest("Translate the following into " + language + ", return only the translation: " + text).then((translatedText) => {
         if (post) {
             // Ajouter la propriété translatedText et mettre loadingTranslation à false
             post.translatedText = translatedText;
@@ -139,32 +140,6 @@ function translate(postId, text) {
     margin-right: 5px;
     border-radius: 5px;
     font-size: 14px;
-}
-
-.clickable {
-    cursor: pointer;
-}
-
-strong {
-    font-weight: 600;
-    font-style: italic;
-    color: #317234;
-}
-
-.loading-indicator {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border: 2px solid #ccc;
-    border-top: 2px solid #333;
-    border-radius: 50%;
-    margin-left: 5px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 
 </style>
